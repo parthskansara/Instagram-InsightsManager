@@ -1,36 +1,21 @@
-import { useEffect, useState } from 'react'
 import './App.css'
-import LoginAPI from './services/LoginAPI.js'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage';
 
 function App() {
   
-  const [url, setUrl] = useState('');
-
-  useEffect(()=> {
-    const fetchUrl = async () => {
-      try {
-        const fetchedUrl = await LoginAPI.getUrl();
-        setUrl(fetchedUrl);
-      } catch (err){
-        console.error("Error fetching login url: ", err);
-      }
-    }
-
-    fetchUrl();
-  }, [])
+  
 
   return (
-    <>
-      { url ?
-        (
-          <a href={`${url}`}>
-            Login to Facebook
-          </a>
-        ) : (
-          <p>Loading..</p>
-        )
-      }
-    </>
+    <BrowserRouter>
+      <div className='App'>
+        <Routes>
+          <Route path='/' element={<LoginPage/>} />
+          <Route path='/home' element={<HomePage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
